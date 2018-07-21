@@ -35,8 +35,65 @@ router.get(
   }
 );
 
+//@oute             GET api/profile/handle/:handle
+// @description     get profile by handle
+// @access          public (everyone can see profiles using the handle)
+
+router.get("/handle/:handle", (req, res) => {
+  const errors = {};
+  Profile.findOne({ handle: req.params.handle })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "There is no profile for this user";
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json(err));
+});
+
+//@oute             GET api/profile/id/:id
+// @description     get profile by id
+// @access          public (everyone can see profiles using the id)
+
+router.get("/user/:id", (req, res) => {
+  const errors = {};
+  Profile.findOne({ user: req.params.id })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = `There is no profile for the user ${req.params.id}`;
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => {
+      res.status(404).json(err);
+    });
+});
+
+//@oute             GET api/profile/all
+// @description     get all profiles
+// @access          public
+router.get("/all", (req, res) => {
+  const errors = {};
+  Profile.find()
+    .populate("user", ["name", "avatar"])
+    .then(profiles => {
+      if (!profiles) {
+        error.noprofile = "There are no profiles";
+        res.status(404).json(errors);
+      }
+      res.json(profiles);
+    })
+    .catch(err => {
+      res.status(404).json({ profiles: "There are no profiles." });
+    });
+});
+
 //@oute             POST api/profile
-// @description     get current profile route
+// @description     save profile and update
 // @access          private
 router.post(
   "/",
@@ -109,6 +166,29 @@ router.post(
           new Profile(profileFields).save().then(profile => res.json(profile));
         });
       }
+    });
+  }
+);
+
+//@oute             POST api/profile/experience
+// @description     add experience to profile
+// @access          private
+router.post(
+  "/experience",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const newExp = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+      profile.experience.unshift(newExp);
+      profile.save().then(profile => res.json(profile));
     });
   }
 );
