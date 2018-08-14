@@ -1,0 +1,21 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.flexRow {
+    display: flex;
+    flex-direction: row;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}

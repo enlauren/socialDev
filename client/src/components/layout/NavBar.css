@@ -1,0 +1,55 @@
+.navbar {
+    padding: 12px;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.containerLeft > div {
+    margin-left: 62px;
+}
+
+.containerRight > div {
+    margin-right: 62px;
+}
+
+.containerLeft a,
+.containerRight a {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    font-family: "Comfortaa", cursive;
+    font-size: 1rem;
+    text-decoration: none;
+    color: rgb(201, 52, 188);
+}
+
+.navItem span {
+    padding-left: 4px;
+}
+
+.navItem .logout {
+    margin-top: 3px;
+}
+
+.navItem .avatar {
+    vertical-align: middle;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+}
+
+@media only screen and (max-width: 700px) {
+    .containerLeft > div,
+    .containerRight > div {
+        padding: 12px 32px 12px 32px;
+        margin: 0;
+    }
+
+    .navbar {
+        display: flex;
+        align-content: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}

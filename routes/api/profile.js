@@ -286,6 +286,7 @@ router.delete(
   "/education/:ed_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    //note -- pass { user: req.user.id } or ObjectId(req.user.id)
     Profile.findByIdAndRemove({ user: req.user.id }).then(() => {
       User.findOneAndUpdate({ _id: req.user.id }).then(() =>
         res.json({ success: true })

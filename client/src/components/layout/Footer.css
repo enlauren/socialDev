@@ -1,0 +1,10 @@
+.footer {
+    padding: 16px;
+    justify-content: center;
+    width: 80%;
+    position: fixed;
+    bottom: 0;
+    background-color: rgba(203, 216, 87, 0.295);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
